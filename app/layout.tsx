@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         title: 'VidFlow - Fast Video Downloader',
         description: 'Download YouTube videos in high quality for free.',
     },
-    metadataBase: new URL('https://video-download-frontend-3vtxnxwr0-codisco.vercel.app'),
+    metadataBase: new URL('https://video-download-frontend-codisco.vercel.app'),
     alternates: {
         canonical: '/',
     },
