@@ -288,20 +288,20 @@ export default function Home() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <button
-                    onClick={() => handleDownload("video")}
-                    aria-label="Download as MP4 Video"
-                    className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-white text-gray-900 rounded-xl font-bold hover:bg-gray-100 transition-colors shadow-lg shadow-white/10"
-                  >
-                    <FaDownload /> Download Video MP4
-                  </button>
-                  <button
-                    onClick={() => handleDownload("audio")}
-                    aria-label="Download as MP3 Audio"
-                    className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-white/10 text-white rounded-xl font-bold hover:bg-white/20 transition-colors border border-white/10"
-                  >
-                    <FaMusic /> Download Audio MP3
-                  </button>
+                  <DownloadButton
+                    url={url}
+                    videoInfo={videoInfo}
+                    type="video"
+                    onDownloadComplete={() => setDownloadType(null)}
+                    onError={(error) => setError(error)}
+                  />
+                  <DownloadButton
+                    url={url}
+                    videoInfo={videoInfo}
+                    type="audio"
+                    onDownloadComplete={() => setDownloadType(null)}
+                    onError={(error) => setError(error)}
+                  />
                 </div>
               </div>
             </div>
