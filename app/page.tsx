@@ -300,7 +300,7 @@ export default function Home() {
           <div className="mt-8 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-lg">
             <p className="text-blue-800 text-sm">
               <span className="font-semibold">💡 Tip:</span> Paste a YouTube URL
-              above, click "Get Info" to preview, then choose whether to
+              above, click &quot;Get Info&quot; to preview, then choose whether to
               download the video or audio only.
             </p>
           </div>
