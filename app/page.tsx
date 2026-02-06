@@ -79,9 +79,12 @@ export default function Home() {
     setDownloadType(type);
     setError("");
 
-    try {
-      const endpoint = type === "video" ? "/api/download/video" : "/api/download/audio";
-      const response = await axios.post(`${API_BASE_URL}${endpoint}`, { url }, { responseType: "blob" });
+    const downloadWithEndpoint = async (endpoint: string) => {
+      const response = await axios.post(`${API_BASE_URL}${endpoint}`, { url }, {
+        responseType: "blob",
+        // Increase timeout for downloads
+        timeout: 300000
+      });
 
       const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
       const link = document.createElement("a");
@@ -95,9 +98,39 @@ export default function Home() {
       link.click();
       link.remove();
       window.URL.revokeObjectURL(downloadUrl);
-    } catch (err) {
-      // Fallback logic here (simplified for this view, assumes same robust logic as before)
-      setError("Download failed. Please try again.");
+      return true;
+    };
+
+    try {
+      // 1. Try primary method (yt-dlp)
+      const primaryEndpoint = type === "video" ? "/api/download/video" : "/api/download/audio";
+      console.log(`Attempting primary download: ${primaryEndpoint}`);
+      await downloadWithEndpoint(primaryEndpoint);
+    } catch (err: any) {
+      console.log("Primary download failed, trying play-dl fallback...");
+      try {
+        // 2. Try play-dl fallback
+        const fallbackEndpoint = type === "video" ? "/api/download/video-playdl" : "/api/download/audio-playdl";
+        await downloadWithEndpoint(fallbackEndpoint);
+      } catch (fallbackErr: any) {
+        console.error("All download methods failed", fallbackErr);
+
+        // Try to extract a helpful error message from the blob response
+        if (fallbackErr.response?.data instanceof Blob) {
+          const reader = new FileReader();
+          reader.onload = () => {
+            try {
+              const errorData = JSON.parse(reader.result as string);
+              setError(errorData.error || "Download failed. This usually happens when YouTube blocks the server IP.");
+            } catch (e) {
+              setError("Download failed. The server might be blocked by YouTube.");
+            }
+          };
+          reader.readAsText(fallbackErr.response.data);
+        } else {
+          setError("Download failed. Please try again or use a different video.");
+        }
+      }
     } finally {
       setDownloadType(null);
     }
