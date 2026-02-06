@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         type: "website",
         siteName: "VidFlow",
     },
-    metadataBase: new URL('https://vidflow.vercel.app'),
+    metadataBase: new URL('https://video-download-frontend-3vtxnxwr0-codisco.vercel.app'),
     alternates: {
         canonical: '/',
     },
