@@ -2,26 +2,35 @@ import type { Metadata } from "next";
 import { Outfit, Inter } from "next/font/google"; // Using generic Google font for now, will switch to Outfit if available or fallback
 import "./globals.css";
 
-const outfit = Inter({ subsets: ["latin"], variable: '--font-outfit' }); // Using Inter as base, naming it outfit for variable handling if needed
+const outfit = Inter({
+    subsets: ["latin"],
+    variable: '--font-outfit',
+    display: 'swap', // Prevents render-blocking
+});
 
 export const metadata: Metadata = {
-    title: "VidFlow - Free Online Video Downloader (High Quality)",
+    title: "VidFlow - Best Free YouTube Video Downloader (1080p & 4K)",
     description:
-        "Download YouTube videos and audio in 1080p, 4K, and MP3. Fast, free, and no installation required. Best tool for saving videos.",
+        "VidFlow is the best free online tool to download YouTube videos and convert YouTube to MP3 audio. High speed, 1080p/4K support, and 100% secure. No registration required.",
     keywords: [
         "youtube downloader",
-        "video saver",
-        "mp3 converter",
-        "4k video download",
-        "online video downloader",
-        "yt to mp3",
+        "video downloader",
+        "youtube to mp3 converter",
+        "save youtube videos",
+        "4k video downloader",
+        "download yt videos free",
         "vidflow",
     ],
     openGraph: {
-        title: "VidFlow - Fast Video Downloader",
-        description: "Download videos and audio instantly. No ads, free forever.",
+        title: "VidFlow - Fast & Free Video Downloader",
+        description: "Download YouTube videos and audio in high quality (1080p, 4K, MP3) for free.",
         type: "website",
         siteName: "VidFlow",
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'VidFlow - Fast Video Downloader',
+        description: 'Download YouTube videos in high quality for free.',
     },
     metadataBase: new URL('https://video-download-frontend-3vtxnxwr0-codisco.vercel.app'),
     alternates: {

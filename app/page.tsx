@@ -4,7 +4,12 @@ import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import DownloadButton from "../components/DownloadButton";
-import { FaYoutube, FaDownload, FaMusic, FaCheckCircle, FaRocket, FaShieldAlt } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
+import { FaDownload } from "react-icons/fa";
+import { FaMusic } from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
+import { FaRocket } from "react-icons/fa";
+import { FaShieldAlt } from "react-icons/fa";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
 
@@ -184,7 +189,7 @@ export default function Home() {
                 <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
                   <Image
                     src={videoInfo.thumbnail}
-                    alt={videoInfo.title}
+                    alt={videoInfo.title || 'img'}
                     fill
                     className="object-cover"
                   />
