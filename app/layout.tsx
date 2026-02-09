@@ -9,9 +9,9 @@ const outfit = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "VidFlow - Best Free YouTube Video Downloader (1080p & 4K)",
+    title: "VidNest - Best Free YouTube Video Downloader (1080p & 4K)",
     description:
-        "VidFlow is the best free online tool to download YouTube videos and convert YouTube to MP3 audio. High speed, 1080p/4K support, and 100% secure. No registration required.",
+        "VidNest is the best free online tool to download YouTube videos and convert YouTube to MP3 audio. High speed, 1080p/4K support, and 100% secure. No registration required.",
     keywords: [
         "youtube downloader",
         "video downloader",
@@ -19,27 +19,31 @@ export const metadata: Metadata = {
         "save youtube videos",
         "4k video downloader",
         "download yt videos free",
-        "vidflow",
+        "vidNest",
+        "YouTube",
+        "YT",
+        "YouTubeDownloader",
+        "YTSave"
     ],
     openGraph: {
-        title: "VidFlow - Fast & Free Video Downloader",
+        title: "VidNest - Fast & Free Video Downloader",
         description: "Download YouTube videos and audio in high quality (1080p, 4K, MP3) for free.",
         type: "website",
-        siteName: "VidFlow",
+        siteName: "VidNest",
     },
     twitter: {
         card: 'summary_large_image',
-        title: 'VidFlow - Fast Video Downloader',
+        title: 'VidNest - Fast Video Downloader',
         description: 'Download YouTube videos in high quality for free.',
     },
     metadataBase: new URL('https://video-download-frontend-codisco.vercel.app'),
     alternates: {
         canonical: '/',
     },
-    authors: [{ name: "VidFlow Team" }],
+    authors: [{ name: "VidNest Team" }],
     icons: {
-        icon: '/favicon.ico',
-        apple: '/favicon.ico',
+        icon: '/favicon.png',
+        apple: '/favicon.png',
     },
     robots: {
         index: true,

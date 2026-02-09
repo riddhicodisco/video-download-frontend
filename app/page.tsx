@@ -9,9 +9,83 @@ import { FaDownload } from "react-icons/fa";
 import { FaMusic } from "react-icons/fa";
 import { FaCheckCircle } from "react-icons/fa";
 import { FaRocket } from "react-icons/fa";
-import { FaShieldAlt } from "react-icons/fa";
+import { FaShieldAlt, FaPlus, FaMinus } from "react-icons/fa";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+
+const FAQ_ITEMS = [
+  {
+    question: "Is VidNest free to use?",
+    answer:
+      "Yes, VidNest is completely free. You can download as many videos as you want without any hidden costs or forced registrations. We believe in keeping the 'flow' simple and accessible for everyone.",
+  },
+  {
+    question: "Can I download videos on my phone?",
+    answer:
+      "Absolutely! VidNest is fully responsive and optimized for all devices. Whether you're on an Android, iPhone, Mac, or Windows PC, you can enjoy seamless video and audio downloads directly from your browser.",
+  },
+  {
+    question: "Is it safe to download from VidNest?",
+    answer:
+      "Security is our top priority. We do not store any of your personal data or downloaded files on our servers. The connection is encrypted, and we ensure a clean, ad-free experience to protect your device from malicious software.",
+  },
+  {
+    question: "What video formats and resolutions are supported?",
+    answer:
+      "We currently support high-quality MP4 video downloads up to 1080p and crystal clear MP3 audio extraction. We're constantly working on adding support for even higher resolutions like 4K and more formats.",
+  },
+  {
+    question: "How long does it take to process a download?",
+    answer:
+      "Most videos are processed instantly! However, for longer videos or 4K content, it might take a few extra seconds to ensure the best quality. Our advanced server-side processing ensures you get your files as fast as possible.",
+  },
+];
+
+function FAQItem({
+  question,
+  answer,
+  isOpen,
+  onClick,
+}: {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <div className="border-b border-white/10 last:border-0">
+      <button
+        onClick={onClick}
+        className="w-full py-6 flex items-center justify-between text-left group focus:outline-none"
+      >
+        <span
+          className={`text-lg md:text-xl font-semibold transition-colors ${isOpen ? "text-purple-400" : "text-white group-hover:text-purple-300"
+            }`}
+        >
+          {question}
+        </span>
+        <div
+          className={`flex-shrink-0 ml-4 w-8 h-8 rounded-full border border-white/10 flex items-center justify-center transition-all ${isOpen ? "bg-purple-600/20 border-purple-500/50" : "bg-white/5"
+            }`}
+        >
+          {isOpen ? (
+            <FaMinus className="text-sm text-purple-400" />
+          ) : (
+            <FaPlus className="text-sm text-gray-400" />
+          )}
+        </div>
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-96 pb-6 opacity-100" : "max-h-0 opacity-0"
+          }`}
+      >
+        <p className="text-gray-400 leading-relaxed text-base md:text-lg">
+          {answer}
+        </p>
+      </div>
+    </div>
+  );
+}
 
 interface VideoInfo {
   title: string;
@@ -28,6 +102,8 @@ export default function Home() {
   const [downloadType, setDownloadType] = useState<"video" | "audio" | null>(
     null,
   );
+  const [openFAQIndex, setOpenFAQIndex] = useState<number | null>(0);
+
 
   const handleFetchInfo = async () => {
     if (!url) {
@@ -151,7 +227,7 @@ export default function Home() {
               const errorData = JSON.parse(reader.result as string);
               setError(
                 errorData.error ||
-                  "Download failed. This usually happens when YouTube blocks the server IP.",
+                "Download failed. This usually happens when YouTube blocks the server IP.",
               );
             } catch (e) {
               setError(
@@ -180,7 +256,7 @@ export default function Home() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "SoftwareApplication",
-            name: "VidFlow",
+            name: "VidNest",
             applicationCategory: "MultimediaApplication",
             operatingSystem: "Web",
             offers: {
@@ -211,9 +287,16 @@ export default function Home() {
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white via-purple-200 to-blue-200 tracking-tight">
-            VidFlow
-          </h1>
+          <div className="flex justify-center mb-6">
+            <Image
+              src="/logo.png"
+              alt="VidNest Logo"
+              width={200}
+              height={100}
+              className="h-12 md:h-20 w-auto object-contain"
+              priority
+            />
+          </div>
           <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
             Download{" "}
             <span className="text-white font-semibold">YouTube videos</span> and{" "}
@@ -313,7 +396,7 @@ export default function Home() {
       <section className="bg-white/5 py-20 border-y border-white/5">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-16">
-            Why Choose VidFlow?
+            Why Choose VidNest?
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             {[
@@ -347,58 +430,57 @@ export default function Home() {
       </section>
 
       {/* SEO Content & FAQ (Below the fold) */}
-      <section className="max-w-4xl mx-auto px-6 py-20 text-gray-400">
-        <div className="prose prose-invert max-w-none">
-          <h2 className="text-3xl text-white font-bold mb-6">
-            Best YouTube Downloader and MP3 Converter
+      <section className="max-w-4xl mx-auto px-6 py-24">
+        <div className="prose prose-invert max-w-none mb-20">
+          <h2 className="text-3xl md:text-4xl text-white font-bold mb-8 text-center">
+            The Ultimate YouTube Downloader
           </h2>
-          <p>
-            VidFlow is the premier tool for downloading videos from YouTube.
-            Whether you need to save a tutorial for offline viewing or convert a
-            music video to MP3 for your playlist, VidFlow makes it simple, fast,
-            and free.
-          </p>
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 md:p-12">
+            <p className="text-lg text-gray-400 leading-relaxed mb-6">
+              VidNest is the premier tool for downloading videos from YouTube.
+              Whether you need to save a tutorial for offline viewing, grab a
+              presentation for work, or convert a music video to MP3 for your
+              personal playlist, VidNest makes it simple, fast, and free.
+            </p>
+            <p className="text-lg text-gray-400 leading-relaxed">
+              Our service is designed with a focus on speed and user privacy. No
+              tracking, no intrusive ads, and no complicated setup. Just paste
+              the link and let the flow take over.
+            </p>
+          </div>
+        </div>
 
-          <h3 className="text-2xl text-white font-bold mt-12 mb-6">
-            Frequently Asked Questions
-          </h3>
-          <div className="space-y-8">
-            <div>
-              <h4 className="text-xl text-white font-semibold mb-2">
-                Is VidFlow free to use?
-              </h4>
-              <p>
-                Yes, VidFlow is completely free. You can download as many videos
-                as you want without any hidden costs.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-xl text-white font-semibold mb-2">
-                Can I download videos on my phone?
-              </h4>
-              <p>
-                Absolutely. VidFlow is optimized for all devices including
-                Android, iPhone, Mac, and Windows PC.
-              </p>
-            </div>
-            <div>
-              <h4 className="text-xl text-white font-semibold mb-2">
-                Is it safe?
-              </h4>
-              <p>
-                Yes, we do not store any of your data or downloaded files. The
-                connection is secure and private.
-              </p>
-            </div>
+        <div className="max-w-3xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl text-white font-bold mb-4">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-gray-400">
+              Everything you need to know about VidNest and how it works.
+            </p>
+          </div>
+
+          <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-4 md:p-8">
+            {FAQ_ITEMS.map((item, index) => (
+              <FAQItem
+                key={index}
+                question={item.question}
+                answer={item.answer}
+                isOpen={openFAQIndex === index}
+                onClick={() =>
+                  setOpenFAQIndex(openFAQIndex === index ? null : index)
+                }
+              />
+            ))}
           </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="border-t border-white/10 py-12 text-center text-gray-500 text-sm">
-        <p className="mb-4">© 2026 VidFlow. All rights reserved.</p>
+        <p className="mb-4">© 2026 VidNest. All rights reserved.</p>
         <p>
-          Disclaimer: VidFlow is not affiliated with YouTube. Please respect
+          Disclaimer: VidNest is not affiliated with YouTube. Please respect
           copyright laws.
         </p>
       </footer>
